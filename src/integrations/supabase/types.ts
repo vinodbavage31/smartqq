@@ -14,7 +14,169 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      businesses: {
+        Row: {
+          address: string | null
+          avg_slot_duration_minutes: number
+          category: string
+          city: string | null
+          created_at: string
+          description: string | null
+          id: string
+          is_open: boolean
+          name: string
+          owner_id: string
+        }
+        Insert: {
+          address?: string | null
+          avg_slot_duration_minutes?: number
+          category?: string
+          city?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          is_open?: boolean
+          name: string
+          owner_id: string
+        }
+        Update: {
+          address?: string | null
+          avg_slot_duration_minutes?: number
+          category?: string
+          city?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          is_open?: boolean
+          name?: string
+          owner_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "businesses_owner_id_fkey"
+            columns: ["owner_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      notifications: {
+        Row: {
+          business_name: string | null
+          created_at: string
+          id: string
+          is_read: boolean
+          message: string
+          title: string
+          user_id: string
+        }
+        Insert: {
+          business_name?: string | null
+          created_at?: string
+          id?: string
+          is_read?: boolean
+          message: string
+          title: string
+          user_id: string
+        }
+        Update: {
+          business_name?: string | null
+          created_at?: string
+          id?: string
+          is_read?: boolean
+          message?: string
+          title?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "notifications_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          created_at: string
+          full_name: string | null
+          id: string
+          phone: string | null
+          role: string
+        }
+        Insert: {
+          created_at?: string
+          full_name?: string | null
+          id: string
+          phone?: string | null
+          role?: string
+        }
+        Update: {
+          created_at?: string
+          full_name?: string | null
+          id?: string
+          phone?: string | null
+          role?: string
+        }
+        Relationships: []
+      }
+      queue_slots: {
+        Row: {
+          alert_sent: boolean
+          booked_at: string
+          business_id: string
+          customer_id: string
+          id: string
+          notes_to_customer: string | null
+          position: number
+          service_requested: string | null
+          slot_date: string
+          status: string
+        }
+        Insert: {
+          alert_sent?: boolean
+          booked_at?: string
+          business_id: string
+          customer_id: string
+          id?: string
+          notes_to_customer?: string | null
+          position: number
+          service_requested?: string | null
+          slot_date?: string
+          status?: string
+        }
+        Update: {
+          alert_sent?: boolean
+          booked_at?: string
+          business_id?: string
+          customer_id?: string
+          id?: string
+          notes_to_customer?: string | null
+          position?: number
+          service_requested?: string | null
+          slot_date?: string
+          status?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "queue_slots_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "businesses"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "queue_slots_customer_id_fkey"
+            columns: ["customer_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
